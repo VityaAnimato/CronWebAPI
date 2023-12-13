@@ -1,0 +1,6 @@
+@CronWebApi_HostAddress = http://localhost:5263
+
+GET {{CronWebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
