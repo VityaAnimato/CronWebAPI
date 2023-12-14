@@ -4,6 +4,7 @@ using CronWebApi.Models;
 using Cron.Core.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
+using Microsoft.OpenApi.Models;
 
 namespace CronWebApi
 {
@@ -16,7 +17,15 @@ namespace CronWebApi
                 opt.UseInMemoryDatabase("RequestHistory"));
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(options =>
+            {
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "IP address details Web API",
+                    Description = "Тестовое задание от CRON-IT\n"
+                });
+            });
 
             var app = builder.Build();
 
