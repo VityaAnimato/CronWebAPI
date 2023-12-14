@@ -38,10 +38,9 @@ namespace CronWebApi
                 }
                                
                 var responce = IpAddressDetails.Get(requestedIP).Result;
-                var status = responce.StatusCode;
                 var ipAddressDetails = await responce.Content.ReadAsStringAsync();
 
-                return Results.Content(ipAddressDetails, "text/plain", Encoding.UTF8, (int)status);
+                return Results.Content(ipAddressDetails, "text/plain", Encoding.UTF8, (int)responce.StatusCode);
             });
 
             app.Run();
