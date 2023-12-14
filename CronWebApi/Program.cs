@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using CronWebApi.Models;
 using Cron.Core.Services;
+using Microsoft.AspNetCore.Mvc;
+using System.Text;
 
 namespace CronWebApi
 {
@@ -34,8 +36,12 @@ namespace CronWebApi
                     db.RequestHistoryItems.Add(new RequestHistoryItem { RequestData = requestedIP });
                     db.SaveChanges();
                 }
+                               
+                var responce = IpAddressDetails.Get(requestedIP).Result;
+                var status = responce.StatusCode;
+                var ipAddressDetails = await responce.Content.ReadAsStringAsync();
 
-                return IpAddressDetails.Get(requestedIP).Result;
+                return Results.Content(ipAddressDetails, "text/plain", Encoding.UTF8, (int)status);
             });
 
             app.Run();
